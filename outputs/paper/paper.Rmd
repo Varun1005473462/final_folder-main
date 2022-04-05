@@ -5,7 +5,8 @@ author:
   "Varun Vijay"
 thanks: "Code and data are available at: https://github.com/Varun1005473462/final_folder-main.git."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper presents an analysis on the effect of Covid-19 on crime rates in Toronto neighborhoods in 2020. The paper uses datasets obtained from opendatatoronto to show how covid-19 had a negative effect on crime rates. The analysis consists of using the statistical programming language R to model the data using regression and constructing various plots and graphs to visually represent the data. The results obtained show us how pandemics like covid-19 can affect a person's mindset, enabling us to better predict their actions during such situations.\\par\\textbf {Keywords:} Covid-19, Crime. Toronto neighborhoods, residents, open data toronto"
+
 output:
   bookdown::pdf_document2
 toc: FALSE
@@ -13,7 +14,7 @@ bibliography: references.bib
 ---
 
 
-```{r setup, include=FALSE}
+```{r libraries, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(modelsummary)
 library(readr)
@@ -32,25 +33,41 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-After the first reported outbreak of covid-19 in December 2019, the entire world changed. Covid-19 was quickly declared to be a health emergency of global concern by the World health organization. Governments started imposing lockdowns, travel was banned,  public gatherings were restricted, buisnesses were closed down and everyone started isolating at home. Citizens of countries were essentially restricted to their homes and rarely left. Covid-19 had a huge impact on the global economy and has restricted people's actions and movements. The question this paper seeks to answer is how the covid pandemic has affected crime in various neighborhoods in Toronto. 
+After the first reported outbreak of covid-19 in December 2019, the entire world changed. Covid-19 was quickly declared to be a health emergency of global concern by the World health organization in March of 2020. Governments took measures to restrict the spread of the disease such as imposing lockdowns, travel bans, restrictions on public gatherings, closing down businesses and advising people to isolate at home. Citizens of countries were essentially restricted to their homes and rarely left. Covid-19 had a huge impact on the global economy and had restricted people's actions and movements. The question this paper seeks to answer is how the covid pandemic had affected crime in various neighborhoods in Toronto in 2020. 
 
-In this paper, we look at how the number of covid cases in a neighborhood can affect the various crime rates in the neighborhood such as assault rates and auto thefts. We construct a model using R based on the dataset in which we can see how the number of covid cases can affect the various crime statistics. We also use the dataset to construct various histograms, bar plots and summary statistics about the dataset to improve the quality of our analysis. The results obtained seem to imply that the covid pandemic has had a negative effect on crime in 2020.
+In this paper, we use data on covid cases and crime rates in Toronto for the year 2020 to see how the number of covid cases in a neighborhood had affected crime in Toronto neighborhoods. We construct a model using R in order to see how the number of covid cases can affect the crime rate in a neighborhood. We also use the dataset to construct various histograms, bar plots and summary statistics about the dataset to improve the quality of our analysis. The results obtained seem to imply that the covid pandemic had a negative effect on crime in 2020 as crime rates went down in most Toronto neighborhoods. The results obtained contribute to our understanding of how the presence of a common threat that affects everyone such as a pandemic in this case can discourage people from criminal actions. It will allow us to improve our predictions of a person's behavior during such situations.
 
 The remainder of this paper is structured as follows: Section 2 will discuss the data for this paper, Section 3 will discuss the model that has been obtained, Section 4 will present the results obtained from the analysis of the dataset, and finally Section 5 will discuss the strengths and weaknesses of the paper.
 
 # Data
 
+## Obtaining the covid_cases dataset
+
 ```{r dataextract, echo=FALSE}
 options(readr.show_col_types = FALSE)
 covid_cases<-
   read_csv(here::here("inputs/data/covid_cases.csv"))
+covid_cases
+```
+
+## Obtaining the neighborhood crime cases dataset
+
+```{r dataextract2, echo=FALSE}
 neighbourhood_crime_rates<-
   read_csv(here::here("inputs/data/neighbourhood_crime_rates.csv"))
-covid_cases
 neighbourhood_crime_rates
 ```
-```{r}
-covid_cases_neighbourhood<-data.frame(table(covid_cases['Neighbourhood Name']))
+
+
+## Finding the number of covid cases for each neighborhood for the year 2020
+```{r, echo=TRUE}
+covid_cases<-
+  covid_cases |>
+  mutate(year=format(covid_cases$`Episode Date`,"%Y"))
+covid_cases2020<-
+  covid_cases |>
+  filter(year == 2020)
+covid_cases_neighbourhood<-data.frame(table(covid_cases2020['Neighbourhood Name']))
 colnames(covid_cases_neighbourhood)[1]<-"Neighbourhood"
 colnames(covid_cases_neighbourhood)[2]<-"Number of Covid cases"
 covid_cases_neighbourhood 
