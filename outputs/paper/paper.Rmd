@@ -37,7 +37,7 @@ After the first reported outbreak of covid-19 in December 2019, the entire world
 
 In this paper, we use data on covid cases and crime rates in Toronto for the year 2020 to see how the number of covid cases in a neighborhood had affected crime in Toronto neighborhoods. We construct a model using R in order to see how the number of covid cases can affect the crime rate in a neighborhood. We also use the dataset to construct various histograms, bar plots and summary statistics about the dataset to improve the quality of our analysis. The results obtained seem to imply that the covid pandemic had a negative effect on crime in 2020 as crime rates went down in most Toronto neighborhoods. The results obtained contribute to our understanding of how the presence of a common threat that affects everyone such as a pandemic in this case can discourage people from criminal actions. It will allow us to improve our predictions of a person's behavior during such situations.
 
-The remainder of this paper is structured as follows: Section 2 will discuss the data for this paper, Section 3 will discuss the model that has been obtained, Section 4 will present the results obtained from the analysis of the dataset, and finally Section 5 will discuss the strengths and weaknesses of the paper.
+The paper first presents an overview of the datasets and the variables we will be using for this study in the data section. The model section presents the regression steps taken to generate the model that shows how covid affects crime. The results section discusses the various conclusions we can draw from the data and the model and finally the discussion section discusses the strenghts and weaknesses of the paper. Any additional details are included in the appendix.
 
 # Data
 
@@ -60,6 +60,8 @@ neighbourhood_crime_rates
 
 
 ## Finding the number of covid cases for each neighborhood for the year 2020
+
+
 ```{r, echo=TRUE}
 covid_cases<-
   covid_cases |>
@@ -72,6 +74,7 @@ colnames(covid_cases_neighbourhood)[1]<-"Neighbourhood"
 colnames(covid_cases_neighbourhood)[2]<-"Number of Covid cases"
 covid_cases_neighbourhood 
 ```
+## Arranging the neighborhoods in the neighborhodd_crime_rates and covid_cases_neighborhood dataset alphabetically. 
 
 ```{r}
 neighbourhood_crime_rates |>
