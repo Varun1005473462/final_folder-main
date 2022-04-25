@@ -1,6 +1,6 @@
 # Overview
 
-This repo contains R scripts and an RMarkdown file used to analyze data on neighbourhood crime rates and covid-19 cases in Toronto, using data obtained from opendatatoronto. The purpose of this report was to determine if there is a connection between the crime rate in a neighbourhood and the number of covid-cases in the neighbourhood.
+This repo contains R scripts and an RMarkdown file used to analyze data on neighbourhood crime rates and covid-19 cases in Toronto, using data obtained from opendatatoronto. The purpose of this report was to determine if there is a connection between the crime rate in a neighbourhood and the number of covid-cases in the neighbourhood. The paper also uses economic information on Toronto neighborhoods from 2016 to see how wealth affects crime rates. 
 
 More information on the datasets can be found on the Toronto Police Service Public Safety Data Portal.
 
