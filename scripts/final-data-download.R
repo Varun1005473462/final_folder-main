@@ -59,22 +59,5 @@ write_csv(neighbourhood_crime_rates,'inputs/data/neighbourhood_crime_rates.csv')
 
 
 
-# get package
-package <- show_package("6e19a90f-971c-46b3-852c-0c48c436d1fc")
-package
 
-# get all resources for this package
-resources <- list_package_resources("6e19a90f-971c-46b3-852c-0c48c436d1fc")
-
-# identify datastore resources; by default, Toronto Open Data sets datastore resource format to CSV for non-geospatial and GeoJSON for geospatial resources
-economic_data <- filter(resources, tolower(format) %in% c('csv', 'geojson'))
-
-# load the first datastore resource as a sample
-neighborhood_economic_data <- filter(economic_data, row_number()==1) %>% get_resource()
-neighborhood_economic_data
-
-
-### Saving data ###
-write_csv(neighborhood_economic_data,'inputs/data/neighbourhood_economic_data.csv')
-  
     
