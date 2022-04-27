@@ -1,6 +1,6 @@
 ---
-title: "Modelling Covid's effect on Assaults in Toronto"
-subtitle: "A statistical analysis of how the rise of Covid in 2020 affected assault rates in various downtown neighborhoods in Toronto"
+title: "Does Covid encourage assaults?"
+subtitle: "A statistical analysis of how the rise of Covid in 2020 affected assault rates in various neighborhoods in Toronto"
 author: 
   "Varun Vijay"
 thanks: "Code and data are available at: https://github.com/Varun1005473462/final_folder-main.git."
@@ -43,11 +43,11 @@ The paper first presents an overview of the datasets and the variables we will b
 
 ## Data Source and collection
 
-The relevant datasets were obtained using opendatatoronto and show statistics related to Covid cases and to crime figures. The first dataset is about Covid cases in Toronto and records all Covid cases reported since January 2020. The dataset includes all cases related to outbreaks and sporadic cases, those that occur in the community. The data was extracted from the provincial Case & Contact Management System and the variables in the dataset include the neighbourhood the case was reported in, the date it was reported, the client gender, Age group and the classification of the case, whether it was probable or improbable. The full dataset /@ref(table:dataset1) can be found in Appendix B.
+The relevant datasets were obtained using opendatatoronto and show statistics related to Covid cases and to crime figures. The first dataset is about Covid cases in Toronto and records all Covid cases reported since January 2020. The dataset includes all cases related to outbreaks and sporadic cases, those that occur in the community. The data was extracted from the provincial Case & Contact Management System and the variables in the dataset include the neighbourhood the case was reported in, the date it was reported, the client gender, Age group and the classification of the case, whether it was probable or improbable. The full dataset \@ref(table:dataset1) can be found in Appendix B.
 
-The second dataset used for this paper was the dataset related to crime statistics in Toronto neighbourhoods. The dataset contains a list of crime related statistics by neighbourhood and includes figures such as number of assaults, number of car thefts, number of shootings, etc. for the years 2014 to 2020. We are only interested in the number of assaults for 2019 and 2020. The full dataset /@ref(table:dataset2) can be found in Appendix B.
+The second dataset used for this paper was the dataset related to crime statistics in Toronto neighbourhoods. The dataset contains a list of crime related statistics by neighbourhood and includes figures such as number of assaults, number of car thefts, number of shootings, etc. for the years 2014 to 2020. We are only interested in the number of assaults for 2019 and 2020. The full dataset \@ref(table:dataset2) can be found in Appendix B.
 
-The datasets were extracted using R [@citeR] and R packages opendatatoronto [@citeopendatatoronto], tidyverse [@tidyverse], dpylr [@dpylr] and knitr [@knitr]. The data was then processed, manipulated and analysed for the purposes of this paper. 
+The datasets were extracted using R [@citeR] and R packages opendatatoronto [@citeopendatatoronto], tidyverse [@tidyverse], dplyr [@dplyr] and knitr [@knitr]. The data was then processed, manipulated and analysed for the purposes of this paper. 
 
 
 ## Data Modification
@@ -118,7 +118,7 @@ final_dataset<-
 final_dataset
 ```
 
-The final dataset /@ref(table:dataset_final) consists of 140 observations and 13 variables:
+The final dataset \@ref(table:dataset_final) consists of 140 observations and 13 variables:
 Neighbourhood: Name of the neighbourhood
 Assault_2019: number of assaults in that neighbourhood for the year 2019
 Assault_2020: number of assaults in that neighbourhood for the year 2020
@@ -233,7 +233,7 @@ $$ y = 47.418	-0.858*x_1+1.059*x_2 +13.834*x_3 -1.964*x_4 $$
 
 This shows that there appears to be more of a positice relation between number of assaults and covid cases in a neighbourhood. When there is a unit increase in number of females who have covid, there is 0.858 decrease in the number of assaults in that neighbourhood. However, when there is a unit increase in the number of males with covid, there is a 1.059 increase in the number of assaults in the neighbourhood. When there is an unit increase in the number of people between 30 and 39 who get covid, there is a 13.834 increase in the number of assaults. However, when there is an unit increase in the number of people between 40 and 49 who get covid, there is only a 1.964 decrease in the number of assaults.
 
-## final model graphs
+## Final model graphs
 
 ```{r figure 3, echo=FALSE, fig.cap="Relationship between Covid and Assault rates in 2020"}
 final_dataset |>
@@ -326,7 +326,7 @@ final_dataset |>
 Figure 4,5,6,7 and 8 all show that there seems to be a positive relation between the number of covid cases in a neighbourhood and the number of assaults in that neighbourhood. The strongest positive relation is shown to be between the number of assaults in a neighbourhood and the age group 30 to 39 since figure 6 has the steepest slope. 
 
 
-```{r figure 5, echo=FALSE}
+```{r figure 9, echo=FALSE}
 par(mfrow = c(2,2))
 model<-
   lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`+`40 to 49`,
@@ -341,7 +341,6 @@ We can analyse the goodness of fit for the model from the above 4 plots \ref(fig
 The results obtained from our model and analysis of the dataset seem to imply that the number of covid cases in a neighbourhood had a positive relationship with the number of assaults in that same neighbourhood in the year 2020. The final model we obtained is:
 $$ y = 47.418	-0.858*x_1+1.059*x_2 +13.834*x_3 -1.964*x_4 $$
 where 
-
 y= number of assaults in a neighbourhood
 x_1 = number of female covid cases in a neighbourhood
 x_2 = number of male covid cases in a neighbourhood
@@ -503,4 +502,29 @@ neighbourhood_crime_rates
 # References
 
 <div id = "refs"></div>
+
+[@thereferencecanbewhatever]
+
+[@ggplot2]
+
+
+[@dplyr]
+
+[@tidyr]
+
+[@janitor]
+
+[@reshape2]
+
+[@here]
+
+[@tinytex]
+
+
+[@readr]
+
+[@metaopendata]
+
+
+
 
