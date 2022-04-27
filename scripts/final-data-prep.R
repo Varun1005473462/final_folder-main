@@ -34,7 +34,7 @@ covid_cases_final<-covid_cases_final |>
 colnames(covid_cases_final)[1]<-"Neighbourhood"
 colnames(covid_cases_final)[2]<-"FEMALE_Covid_Cases"
 colnames(covid_cases_final)[3]<-"MALE_Covid_Cases"
-covid_cases_final<-na.omit(covid_cases_final)
+covid_cases_final<-na.omit(covid_cases_final) ## cleaning one na case
 
 
 # Neighbourhood cases modification
@@ -46,7 +46,6 @@ neighbourhood_crime_rates<-
 neighbourhood_crime_rates_assaults<- 
   neighbourhood_crime_rates |>
   select(Neighbourhood,
-         Assault_2019,
          Assault_2020)
 neighbourhood_crime_rates_assaults<-arrange(neighbourhood_crime_rates_assaults,Neighbourhood)
 
