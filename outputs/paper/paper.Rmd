@@ -45,7 +45,7 @@ The paper first presents an overview of the datasets and the variables we will b
 
 ## Data Source and collection
 
-The relevant datasets were obtained using opendatatoronto and show statistics related to Covid cases and to crime figures. The first dataset is about Covid cases in Toronto and records all Covid cases reported since January 2020. The dataset includes all cases related to outbreaks and sporadic cases, those that occur in the community. The data was extracted from the provincial Case & Contact Management System and the variables in the dataset include the neighbourhood the case was reported in, the date it was reported, the client gender, Age group and the classification of the case, whether it was probable or improbable. The full dataset \@ref(table: dataset1) can be found in Appendix B.
+The relevant datasets were obtained using opendatatoronto and show statistics related to Covid cases and to crime figures. The first dataset is about Covid cases in Toronto and records all Covid cases reported since January 2020. The dataset includes all cases related to outbreaks and sporadic cases, those that occur in the community. The data was collected by opendatatoronto from the provincial Case & Contact Management System and the variables in the dataset include the neighbourhood the case was reported in, the date it was reported, the client gender, Age group and the classification of the case, whether it was probable or improbable. The full dataset \@ref(table: dataset1) can be found in Appendix B.
 
 The second dataset used for this paper was the dataset related to crime statistics in Toronto neighbourhoods. The dataset contains a list of crime related statistics by neighbourhood and includes figures such as number of assaults, number of car thefts, number of shootings, etc. for the years 2014 to 2020. We are only interested in the number of assaults for 2020. The full dataset \@ref(table: dataset2) can be found in Appendix B.
 
@@ -54,9 +54,9 @@ The datasets were extracted using R [@citeR] and R packages opendatatoronto [@ci
 
 ## Data Modification
 
-For the purposes of this paper, we are interested only in covid cases that were reported during 2020 since that was when the pandemic first started. So the only cases selected were those reported during 2020. We then focused on the variables Client Gender and the age group of the infected. These variables are the ones that pertain the most to the total number of covid cases in a neighbourhood and so are the ones we will be focusing on for this dataset as they also more important than the others. New variables using the dataset were created such as number of female covid cases, number of male covid cases, number of transgender covid cases, number of other genders and unknown genders covid cases and variables related to the various age groups, less than 19, between 20 to 29, 30 to 39, etc. We also created a new variable where we counted the total number of Covid cases in a neighbourhood. However, we will be excluding all age groups greater than or equal to 50 since it is unlikely that anyone of that age will be assaulting people as they are mostly middle aged or old people. All NA cases were also deleted in order to improve the analysis.  
+For the purposes of this paper, we are interested only in covid cases that were reported during 2020 since that was when the pandemic first started. So the only cases selected were those reported during 2020. We then focused on the variables Client Gender and the age group of the infected. These variables are the ones that pertain the most to the total number of covid cases in a neighbourhood and so are the ones we will be focusing on for this dataset. New variables were created such as number of female covid cases, number of male covid cases, number of transgender covid cases, number of other genders and unknown genders covid cases and variables related to the various age groups, less than 19, between 20 to 29, 30 to 39, etc. We also created a new variable where we counted the total number of Covid cases in a neighbourhood. However, we will be excluding all age groups greater than or equal to 50 since it is unlikely that anyone of that age will be assaulting people as they are mostly middle aged or old people. All NA cases were also deleted in order to improve the analysis. All of these variables were placed together in a dataset for analysis. This dataset is the covid dataset we will be using.  
 
-For the crime dataset, we only focused on the neighbourhoods and the number of assaults for the year 2020 since these pertain directly to my paper. We then joined the two datasets together and obtained the final_dataset. All 140 neighbourhoods are included in this dataset and it is the dataset we will be using for the rest of this paper. 
+For the crime dataset, we only focused on the neighbourhoods and the number of assaults for the year 2020 since these pertain directly to my paper. We then joined the crime and covid datasets together and obtained the final_dataset. All 140 neighbourhoods are included in this dataset and it is the dataset we will be using for the rest of this paper. 
 
 The code for the dataset modifications are included in scripts in final-data-prep.R. 
 
@@ -107,7 +107,8 @@ final_dataset |>
   datasummary_correlation()
 ```
 
-From the above table \@ref(table: summary 2) we can see that the variables with the strongest correlation with assaults in 2020 are number of female covid cases, number of male covid cases, number of covid cases for age groups 20 to 29, 30 to 39 and 40 to 49. It makes for these variables to relate to number of assaults in a neighbourhood since they are the most important ones since age and gender are incredibly important in such situations when an assault is occurring. We also see that age groups and the number of male and female covid cases are strongly related. 
+From the above table \@ref(table: summary 2) we can see that the variables with the strongest correlation with assaults in 2020 are number of female covid cases, number of male covid cases, number of covid cases for age groups 20 to 29, 30 to 39 and 40 to 49. It makes sense for these variables to relate to number of assaults in a neighbourhood since they are the most important ones since age and gender are incredibly important when building a model for crime and assaults. We also see that age groups and the number of male and female covid cases are strongly related. 
+
 
 ## Assault cases by neighbourhood
 
@@ -122,7 +123,7 @@ geom_point(data=final_dataset, aes(x=Neighbourhood, y=Assault_2020,color="red"),
 ```
 
 
-Fig \@ref(fig: figure 1) shows us the number of assaults in 2020 per neighbourhood. There does seem to be some slight variation in the number of assaults per neighbourhood with some high outliers which match the results shown in the summary table. 
+Fig \@ref(fig: figure 1) shows us the number of assaults in 2020 per neighbourhood. There does seem to be some variation in the number of assaults per neighbourhood with some high outliers. The plot obtained matches the results shown in the summary table. 
 
 ## Covid cases by neighbourhood
 
@@ -303,7 +304,7 @@ final_dataset |>
 ```
 
 
-Figure 4,5,6,7,8 and 9 all show that there seems to be a positive relation between the number of covid cases in a neighbourhood and the number of assaults in that neighbourhood except for a few outliers. When the number of covid cases in a neighbourhood are low so are the number of assaults and when the number of covid cases increase so do the number of assaults increase with it. 
+Figure 4 \ref(fig:figure 4),5 \ref(fig:figure 5),6 \ref(fig:figure 6),7 \ref(fig:figure 7),8 \ref(fig:figure 8) and 9 \ref(fig:figure 9) all show that there seems to be a positive relation between the number of covid cases in a neighbourhood and the number of assaults in that neighbourhood except for a few outliers. When the number of covid cases in a neighbourhood are low so are the number of assaults and when the number of covid cases increase so do the number of assaults increase with it. 
 
 
 ```{r figure 10,fig.dim = c(8, 6), fig.cap="Figure 9: Goodness of fit plots", echo=FALSE}
@@ -314,7 +315,7 @@ model<-
 plot(model)
 ```
 
-We can analyse the goodness of fit for the model from the above 4 plots \ref(fig:figure 10). From the residuals vs fitted plot, we see that linearity for the model does hold and that the independent variables do enter in a linear way. However, from the spread of the residuals we see that variance of our residuals is not constant which means that the model has heteroscedasticity. From the Normal Q-Q plot, we see that our data is normally distributed since the points mostly lie on the dotted line except for a few outliers. 
+We can analyse the goodness of fit for the model from the above 4 plots in figure 10 \ref(fig:figure 10). From the residuals vs fitted plot, we see that linearity for the model does hold and that the independent variables do enter in a linear way. However, from the spread of the residuals we see that variance of our residuals is not constant which means that the model has heteroscedasticity. From the Normal Q-Q plot, we see that our data is normally distributed since the points mostly lie on the dotted line except for a few outliers. 
 
 ## Conclusion of results
 
@@ -430,7 +431,7 @@ seventh_model<-
 modelsummary(seventh_model)
 ```
 
-We proceed on with this model and will try to remove the 20 to 29 to see if we get a lower AIC.
+We proceed with this model and will try to remove the 20 to 29 to see if we get a lower AIC.
 
 ```{r, echo=TRUE}
 eight_model<-
@@ -439,7 +440,7 @@ modelsummary(eight_model)
 ```
 
 
-The AIC is not reduced so we keep 20 to 29.
+The AIC is not reduced so we keep 20 to 29 and we try and remove another variable.
 
 ```{r, echo=TRUE}
 seventh_model<-
