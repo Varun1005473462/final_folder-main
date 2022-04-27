@@ -5,11 +5,11 @@ author:
   "Varun Vijay"
 thanks: "Code and data are available at: https://github.com/Varun1005473462/final_folder-main.git."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "This paper presents an analysis on the effect of Covid on assault rates in downtown Toronto neighbourhoods in 2020. The paper uses datasets obtained from opendatatoronto to show how Covid had a negative effect on crime rates. The analysis consists of using the statistical programming language R to model the data using regression and constructing various plots and graphs to visually represent the data. THe results obtained will allow us to better predict people's behavior. With the better prediction of people's behaviour, the police can better manage the public order and government will be able to make reasonable and effective policy to reduce the crime rate.\\par\\textbf {Keywords:} Covid, Assaults, Crime,Toronto neighbourhoods, residents, open data toronto"
+abstract: "This paper presents an analysis on the effect of Covid on assault rates in Toronto neighbourhoods in 2020. The paper uses datasets obtained from opendatatoronto to show the Covid's positive effect on the number assaults in a neighbourhood. The analysis consists of using the statistical programming language R to model the data using regression and constructing various plots and graphs to visually represent the data. THe results obtained will allow us to better predict people's behavior. With the better prediction of people's behaviour, the police can better manage the public order and government will be able to make reasonable and effective policy to reduce the crime rate.\\par\\textbf {Keywords:} Covid, Assaults, Crime,Toronto neighbourhoods, residents, open data toronto"
 
 output:
   bookdown::pdf_document2
-toc: FALSE
+toc: TRUE
 bibliography: references.bib
 ---
 
@@ -31,51 +31,61 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# 1 Introduction
+# Introduction
 
-After the first reported outbreak of Covid in December 2019, the entire world changed. Covid was quickly declared to be a health emergency of global concern by the World health organization in March of 2020. Governments took measures to restrict the spread of the disease such as imposing lockdowns, travel bans, restrictions on public gatherings, closing down businesses and advising people to isolate at home. Citizens of countries were essentially restricted to their homes and rarely left. Covid had a huge impact on the global economy and had restricted people's actions and movements. However, this paper wants to analyse how Covid has affected one of the most common types of crime, assaults. Assaults are often physical and in a time where physical contact is discouraged, it seems contradictory to assault someone as there is the risk you might catch covid. The question this paper seeks to answer is how the Covid pandemic had affected assault rates in various neighbourhoods in Toronto for the year 2020. 
+After the first reported outbreak of Covid in December 2019, the entire world changed. Covid was quickly declared to be a health emergency of global concern by the World health organization in March of 2020. Governments took measures to restrict the spread of the disease such as imposing lockdowns, travel bans, restrictions on public gatherings, closing down businesses and advising people to isolate at home. Citizens of countries were essentially restricted to their homes and rarely left. Covid had a huge impact on the global economy and had restricted people's actions and movements. However, this paper wants to analyse how Covid has affected one of the most common types of crime, assaults, which are often physical in nature. The question this paper seeks to answer is how the Covid pandemic had affected assault rates in various neighbourhoods in Toronto for the year 2020. 
 
-In this paper, we use data on Covid cases and crime statistics in Toronto neighbourhoods for the year 2020 to see how the number of Covid cases in a neighbourhood had affected assualts in that neighbourhood and what factors affected the assault rate the most. We constructed a model using R in order to see how Covid can affect the assault rate in a neighborhood. We also use the dataset to construct various histograms, bar plots and summary statistics about the dataset to improve the quality of our analysis. The results obtained seem to imply that the Covid pandemic had a negative effect on assaults in 2020 as crime rates went down in most downtown neighborhoods. The results obtained contribute to our understanding of how the presence of a common threat that affects everyone such as a pandemic in this case can discourage people from criminal actions. It will allow us to improve our predictions of a person's behavior during such situations. Better predictions of people's behaviors will allow the police to better manage the public order and government to make reasonable and effective policy to reduce the crime rate
+In this paper, we use data on Covid cases and crime statistics in Toronto neighbourhoods for the year 2020 to see how the number of Covid cases in a neighbourhood had affected assaults and what factors affected the assault rate the most. We constructed a linear model using R [@citeR] to model covid's effect on assaults. We also useed the dataset to construct various plots and summary statistics about the dataset to improve the quality of our analysis. The results obtained seem to imply that the Covid pandemic had a positive effect on assaults in 2020 as there is a positive relation between number of covid cases in a neighbourhood and number of assaults. The results obtained contribute to our understanding of how the presence of a common threat that affects everyone such as a pandemic in this case can discourage people from criminal actions. It will allow us to improve our predictions of a person's behavior during such situations. Better predictions of people's behaviors will allow the police to better manage the public order and government to make reasonable and effective policy to reduce the crime rate
 
 The paper first presents an overview of the datasets and the variables we will be using for this study in the data section. The model section presents the regression steps taken to generate the model that shows how Covid affects crime. The results section discusses the various conclusions we can draw from the data and the model and finally the discussion section discusses the strengths and weaknesses of the paper. Any additional details are included in the appendix.
 
-# 2 Data
+# Data
 
-## 2.1 Data Source and collection
+## Data Source and collection
 
-For the dataset, we obtain data using opendatatoronto on crime related statistics, Covid related data pertaining to Toronto neighborhoods. 
+The relevant datasets were obtained using opendatatoronto and show statistics related to Covid cases and to crime figures. The first dataset is about Covid cases in Toronto and records all Covid cases reported since January 2020. The dataset includes all cases related to outbreaks and sporadic cases, those that occur in the community. The data was extracted from the provincial Case & Contact Management System and the variables in the dataset include the neighbourhood the case was reported in, the date it was reported, the client gender, Age group and the classification of the case, whether it was probable or improbable. The full dataset /@ref(table:dataset1) can be found in Appendix B.
 
+The second dataset used for this paper was the dataset related to crime statistics in Toronto neighbourhoods. The dataset contains a list of crime related statistics by neighbourhood and includes figures such as number of assaults, number of car thefts, number of shootings, etc. for the years 2014 to 2020. We are only interested in the number of assaults for 2019 and 2020. The full dataset /@ref(table:dataset2) can be found in Appendix B.
 
-## 2.2 Data Modification
-
-
-
-
-## 2.3 Data Tables
+The datasets were extracted using R [@citeR] and R packages opendatatoronto [@citeopendatatoronto], tidyverse [@tidyverse], dpylr [@dpylr] and knitr [@knitr]. The data was then processed, manipulated and analysed for the purposes of this paper. 
 
 
-```{r table 1, echo=FALSE}
+## Data Modification
+
+For the purposes of this paper, we are interested only in covid cases that were reported during 2020 since that was when the pandemic first started. So the only cases selected were those reported during 2020. We then focused on the variables Client Gender and the age group of the infected. These variables are the ones that pertain the most to the total number of covid cases in a neighbourhood and so are the ones I will be focusing on for this dataset as they also more important than the others. New variables using the dataset were created such as number of female covid cases, number of male covid cases, number of transgender covid cases, number of other genders and unknown genders covid cases and variables related to the various age groups. We also created a new variable where we counted the total number of Covid cases in a neighbourhood. However, we will be excluding all age groups greater than or equal to 50 since it is unlikely that anyone of that age will be assaulting people as they are mostly middle aged or old people.  
+
+For the crime dataset, we only focused on the neighbourhoods and the number of assaults for 2019 and for 2020 since these pertain directly to my paper. We then joined the two datasets together and obtained the final_dataset. All 140 neighbourhoods are included in this dataset and it is the dataset we will be using for the rest of this paper. 
+
+```{r , echo=FALSE, include=FALSE}
+## extracting the dataset
 options(readr.show_col_types = FALSE)
 covid_cases<-
   read_csv(here::here("inputs/data/covid_cases.csv"))
 covid_cases<-
   covid_cases |>
   mutate(year=format(covid_cases$`Episode Date`,"%Y"))
+
+## isolating all cases from 2020
 covid_cases2020<-
   covid_cases |>
   filter(year == 2020)
 covid_cases_gender<-covid_cases2020 %>% group_by(`Neighbourhood Name`, `Client Gender`) %>% count()
+covid_cases_age<-covid_cases2020 %>% group_by(`Neighbourhood Name`, `Age Group`) %>% count()
+## creating required variables such as Female covid cases and male covid cases
 covid_cases_gender<-
   covid_cases_gender |>
   pivot_wider(names_from = `Client Gender`,values_fill =0,values_from = n)
-covid_cases_outbreak<-covid_cases2020 %>% group_by(`Neighbourhood Name`,`Outbreak Associated`) %>% count()
-covid_cases_outbreak<-
-  covid_cases_outbreak |>
-  pivot_wider(names_from = `Outbreak Associated`,values_fill =0,values_from = n)
-covid_cases_final<-merge(covid_cases_gender,covid_cases_outbreak)
+## creating required variables for age groups
+covid_cases_age<-
+  covid_cases_age |>
+  pivot_wider(names_from = `Age Group`,values_fill =0,values_from = n)
+## mergind the two datasets together to obtain final dataset
+covid_cases_final<-merge(covid_cases_gender,covid_cases_age)
 covid_cases_final<-
   covid_cases_final |>
-  mutate(total_cases=`Outbreak Associated`+Sporadic)
+  mutate(total_cases=FEMALE+MALE+TRANSGENDER+UNKNOWN+OTHER)
+covid_cases_final<-covid_cases_final |>
+  select(`Neighbourhood Name`, FEMALE,MALE,TRANSGENDER,UNKNOWN,OTHER, `19 and younger`,`20 to 29 Years`,`30 to 39 Years`,`40 to 49 Years`,`50 to 59 Years`,`60 to 69 Years`,`70 to 79 Years`,`80 to 89 Years`,`90 and older`, total_cases)
 colnames(covid_cases_final)[1]<-"Neighbourhood"
 colnames(covid_cases_final)[2]<-"FEMALE_Covid_Cases"
 colnames(covid_cases_final)[3]<-"MALE_Covid_Cases"
@@ -83,7 +93,8 @@ covid_cases_final<-na.omit(covid_cases_final)
 ```
 
 
-```{r table 2, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
+## extracting the dataset
 neighbourhood_crime_rates<-
   read_csv(here::here("inputs/data/neighbourhood_crime_rates.csv"))
 neighbourhood_crime_rates_assaults<- 
@@ -94,119 +105,248 @@ neighbourhood_crime_rates_assaults<-
 neighbourhood_crime_rates_assaults<-arrange(neighbourhood_crime_rates_assaults,Neighbourhood)
 ```
 
+## Dataset for this paper
 
-## Obtaining the final dataset.
-
-```{r table 3, echo=FALSE, fig.cap="Final Dataset"}
+```{r dataset_final, echo=FALSE}
+## rearranging the entries in alphabetical order
 covid_cases_final<-arrange(covid_cases_final,Neighbourhood)
 neighbourhood_crime_rates_assaults<-arrange(neighbourhood_crime_rates_assaults,Neighbourhood)
+## merging crime rates and covid cases to get the final dataset
 final_dataset<-
   neighbourhood_crime_rates_assaults |>
-  mutate(FEMALE_Covid_CASES=covid_cases_final$FEMALE_Covid_Cases,MALE_Covid_CASES=covid_cases_final$MALE_Covid_Cases,transgender_covid_cases=covid_cases_final$TRANSGENDER,unknown_covid_cases= covid_cases_final$UNKNOWN,other_covid_cases=covid_cases_final$OTHER, Outbreak_Associated=covid_cases_final$`Outbreak Associated`,Sporadic=covid_cases_final$Sporadic,Total_CASES=covid_cases_final$total_cases)
+  mutate(FEMALE_Covid_CASES=covid_cases_final$FEMALE_Covid_Cases,MALE_Covid_CASES=covid_cases_final$MALE_Covid_Cases,transgender_covid_cases=covid_cases_final$TRANSGENDER,unknown_covid_cases= covid_cases_final$UNKNOWN,other_covid_cases=covid_cases_final$OTHER, "<=19"=covid_cases_final$`19 and younger`, "20 to 29"=covid_cases_final$`20 to 29 Years`,"30 to 39"=covid_cases_final$`30 to 39 Years`,"40 to 49"=covid_cases_final$`40 to 49 Years`,Total_CASES=covid_cases_final$total_cases)
 final_dataset
 ```
 
+The final dataset /@ref(table:dataset_final) consists of 140 observations and 13 variables:
+Neighbourhood: Name of the neighbourhood
+Assault_2019: number of assaults in that neighbourhood for the year 2019
+Assault_2020: number of assaults in that neighbourhood for the year 2020
+FEMALE_Covid_CASES: Number of reported covid cases in that neighbourhood for females
+MALE_Covid_CASES: Number of reported covid cases in that neighbourhood for males
+transgender_Covid_CASES: Number of reported covid cases in that neighbourhood for transgenders
+unknown_covid_cases: Number of reported covid cases in that neighbourhood for people of unknown genders
+other_covid_cases: Number of reported covid cases in that neighbourhood for people of other genders
+<=19: number of reported covid cases for people less than 19 years old
+20 to 29: number of reported covid cases for people between 20 and 29
+30 to 39: number of reported covid cases for people between 30 and 39
+40 to 49: number of reported covid cases for people between 40 and 49
+Total_CASES: total number of covid cases in a neighbourhood
 
-## 2.4 Data Visualization
+These 13 variables are the ones that are most pertinent to the topic of this paper
 
-```{r summary 1, echo=FALSE}
-final_dataset |>
+
+## Summary statistics
+
+```{r summary 1, echo=FALSE, fig.cap="summary statistics for the final dataset"}
+
+## obtaining summary statistics for the dataset using modelsummary
+summary<-final_dataset |>
   datasummary_skim()
+summary
 ```
 
-```{r summary 2,echo=FALSE}
+The above table \@ref(table: summary 1) shows summary statistics for the dataset. As you can see, on average, the number of assaults per neighbourhood in Toronto decreased from 147.3 to 127.5 from 2019 to 2020. It is possible that this decrease in assaults per neighbourhood is because of Covid. Furthermore, the number of covid cases on average in a neighbourhood is 197.9 with a standard deviation of 167.9 so each neighbourhood has a varying amount of covid cases. Similarly the standard deviation for assaults in 2020 is 127.5 which means that there is a chance we will be able to obtain a relation between covid and assaults. 
+
+## Correlation statistics for the final dataset
+
+```{r summary 2,echo=FALSE, fig.cap= "Correlation statistics for the various variables"}
+
+## obtaining correlation statistics for the dataset using modelsummary
 final_dataset |>
   datasummary_correlation()
 ```
 
+From the above table \@ref(table: summary 2) we can see that the variables with the strongest correlation with assaults in 2020 are number of female covid cases, number of male covid cases, number of covid cases for age groups less than or equal to 19, 20 to 29, 30 to 39 and 40 to 49. It makes for these variables to relate to number of assaults in a neighbourhood since they are the most important ones since age and gender are incredibly important in such situations when an assault is occurring. We also see that age groups and the number of male and female covid cases are strongly related. 
+
 
 ```{r figure 1, echo=FALSE, fig.cap="Assualts in 2020 compared to assaults in 2019"}
+## constructing a ggplot for assaults in 2019 and assaults in 2020 and using colors to create a legend
 colors<-c("Assaults 2019"="red", "Assaults 2020"="blue")
 ggplot()+
 geom_point(data=final_dataset, mapping=aes(x=Neighbourhood, y=Assault_2019,color="Assaults 2019"),size=1) + 
 geom_point(data=final_dataset, aes(x=Neighbourhood, y=Assault_2020,color="Assaults 2020"),size=1)+
   labs(x="Neighbourhoods",
        y="Assaults 2019, Assaults 2020",
-       title="Assualts in 2020 compared to assaults in 2019")
+       title="Figure 1: Assualts in 2020 compared to assaults in 2019")
 ```
+
+Fig \@ref(fig:figure 1) shows us how the number of assaults in 2019 compare to the number of assaults in 2020 per neighbourhood. There does not appear to be a significant difference between the values for each neighbourhood, however, it does seem like most of the assaults in 2020 were less than the ones in 2019 which again might imply that covid does affect number of assaults in a neighbourhood. 
+
+## Covid cases by neighbourhood
 
 ```{r figure 2, echo=FALSE, fig.cap="Covid cases for each neighborhood in 2020"}
-colors<-c("Female"="red", "Male"="blue", "Transgender"="purple","Unknown"="green","Other"="yellow")
-ggplot()+
-geom_point(data=final_dataset, mapping=aes(x=Neighbourhood, y=FEMALE_Covid_CASES,color="Female"),size=1) + 
-geom_point(data=final_dataset, aes(x=Neighbourhood, y=MALE_Covid_CASES,color="Male"),size=1)+
-  geom_point(data=final_dataset, aes(x=Neighbourhood, y=transgender_covid_cases,color="Transgender"),size=1)+
-  geom_point(data=final_dataset, aes(x=Neighbourhood, y=unknown_covid_cases,color="Unknown"),size=1)+
-  geom_point(data=final_dataset, aes(x=Neighbourhood, y=other_covid_cases,color="Other"),size=1)+
-  labs(x="Neighbourhoods",
-       y="Female, Male, Transgender, Unknown, Other",
-       title="Covid cases by gender and neighborhood")
+## constructing a ggplot to see how covid cases vary by neighbourhood
+final_dataset |>
+  ggplot(mapping=aes(x=Neighbourhood,y=Total_CASES, color="red"))+
+  geom_point()+
+  labs(x= "Neighbourhoods",
+       y="Total number of covid cases in the neighbourhood",
+       title="Figure 2: Covid cases for each neighbourhood")
 ```
 
-
-
-
+As we can see from figure \@ref(fig:figure 2), the number of covid cases per neighbourhood varies and are not similar to each other. So there is variation which means there's a possibility the number of assaults might also vary with the covid cases.
 
 
 
 # Model
 
 
+The model I will be using for this paper is:
 
-$$ y = \beta_0 +\beta_1*x_1+\beta_2*x_2  $$
+$$ y = \beta_0 +\beta_1*x_1+\beta_2*x_2 +\beta_3*x_3 +\beta_4*x_4 $$
 
 y= number of assaults in a neighbourhood
 x_1 = number of female covid cases in a neighbourhood
 x_2 = number of male covid cases in a neighbourhood
+x_3 = number of covid cases between ages 30 and 39
+x_4 = number of covid cases between ages 40 and 49
 
-Equation \@ref(eq:bayes) seems useful, eh?
+Here, the number of assaults is the explanatory variable and the number of female covid cases, number of make cases, number between 30 and 39 and number between 40 and 49 are the independent variables.
 
-Here's a dumb example of how to use some references: In paper we run our analysis in `R` [@citeR]. We also use the `tidyverse` which was written by @thereferencecanbewhatever If we were interested in baseball data then @citeLahman could be useful. 
+The reason I have chosen these 4 variables is because from the correlation table \@ref(table: summary 2) in the data section, these variables have some of the strongest correlation with the number of assaults in 2020. 
 
-We can use maths by including latex between dollar signs, for instance $\theta$.
+Additionally, most crimes would not be committed by people older than 50 and would normally be committed by those in the range of 30 to 49 as those who are younger than 30 are still trying to figure out their lives and might not turn to crime yet and those older than 50 are middle aged and old people who would not normally commit crimes. Additionally, gender is one of the most important factors in today's world and is an important variable to include. It is always important to take gender into account as it can often be a confounding variable if you do not include it in the model. I have excluded the transgender and unknown variable from the model because those entries were far less than the number of entries for male and female.
+
 
 
 # Results
 
+Using modelsummary [@modelsummary] and AIC selection process, I was able to obtain my model and the estimates for the model such as intercept, R^2, estimates for independent variables etc which are included in the table \ref(table: model estimates).
 
-
+The AIC process and the code for the estimates are located in tables \ref(model). By the process of forwards AIC, I was able to obtain the final model by removing variables from the model to see if it reduced the AIC value. Once I obtained the lowest AIC value I could obtain, I had obtained my final model.  
 
 ## Table of estimates
 
 ```{r model estimates, echo=FALSE}
-Terms<-c("Intercept", "Female_covid_cases estimate", "Male_covid_cases estimate", "Number of observation", "R^2", "R^2 adjusted", "AIC", "BIC", "Log.Lik", "F")
-values<-c(58.410, -1.174, 2.029, 140, 0.363, 0.354, 1698.6, 1710.3, -845.280, 39.044)
+## creating 2 columns and then merging them to get the dataset
+Terms<-c("Intercept", "Female_covid_cases estimate", "Male_covid_cases estimate","30 to 39 estimate","40 to 49 estimate", "Number of observation", "R^2", "R^2 adjusted", "AIC", "BIC", "Log.Lik", "F")
+values<-c(47.418, -0.858, 1.059, 13.834,-1.964, 140 ,0.508, 0.493, 1666.5, 1684.1, -827.243, 34.810)
 data.frame(Terms, values)
 ```
+## Final model 
 
-$$ y = 58.410	 -1.174*x_1+2.029*x_2  $$
 
-```{r figure , echo=FALSE, fig.cap="Relationship between Covid and Assault rates in 2020"}
+So, using the estimates obtained, the model we have is:
+
+$$ y = 47.418	-0.858*x_1+1.059*x_2 +13.834*x_3 -1.964*x_4 $$
+
+This shows that there appears to be more of a positice relation between number of assaults and covid cases in a neighbourhood. When there is a unit increase in number of females who have covid, there is 0.858 decrease in the number of assaults in that neighbourhood. However, when there is a unit increase in the number of males with covid, there is a 1.059 increase in the number of assaults in the neighbourhood. When there is an unit increase in the number of people between 30 and 39 who get covid, there is a 13.834 increase in the number of assaults. However, when there is an unit increase in the number of people between 40 and 49 who get covid, there is only a 1.964 decrease in the number of assaults.
+
+## final model graphs
+
+```{r figure 3, echo=FALSE, fig.cap="Relationship between Covid and Assault rates in 2020"}
 final_dataset |>
-  ggplot(mapping = aes(x = Total_CASES, y = Assault_2020,color="")) +
-  geom_point()
+  ggplot(mapping = aes(x = Total_CASES, y = Assault_2020,color=""))+
+  geom_point()+
+  labs(x="Total covid cases in a neighbourhood",
+       y="Assaults in 2020",
+       title="Figure 3: Relation between covid cases and assaults")
 ```
 
+From figure 3 \@ref(fig:figure 3), we can see that there appears to be a sort of positive relation between the total number of cases in a neighbourhood and the number of assaults in that neighbourhood for the year 2020. Except for a few outliers, it seems that when cases are low, assaults are low and when cases increase, assaults also increase. 
 
-
-```{r, echo=FALSE}
+```{r figure 4, echo=FALSE}
 final_dataset |>
-  ggplot(aes(x = FEMALE_Covid_CASES+MALE_Covid_CASES, y = Assault_2020)) +
+  ggplot(aes(x = FEMALE_Covid_CASES, y = Assault_2020)) +
   geom_point() +
   geom_smooth(method = "lm",
               color = "black", 
               linetype = "dashed",
               formula = 'y ~ x') +
-  labs(x = "FEMALE_Covid_CASES+MALE_Covid_CASES",
-       y = "total_Crime_2020") +
+  labs(x = "FEMALE_Covid_CASES",
+       y = "Assaults in 2020",
+       title = "Figure 4: Relation between number of assaults in 2020 and the number of female covid cases") +
   theme_classic() +
   scale_color_brewer(palette = "Set1")
 ```
 
-```{r}
-plot(final_model)
+```{r figure 5, echo=FALSE}
+final_dataset |>
+  ggplot(aes(x = MALE_Covid_CASES, y = Assault_2020)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black", 
+              linetype = "dashed",
+              formula = 'y ~ x') +
+  labs(x = "MALE_Covid_CASES",
+       y = "Assaults in 2020",
+       title = "Figure 5: Relation between number of assaults in 2020 and number of male covid cases") +
+  theme_classic() +
+  scale_color_brewer(palette = "Set1")
 ```
 
+
+```{r figure 6, echo=FALSE}
+final_dataset |>
+  ggplot(aes(x =`30 to 39`, y = Assault_2020)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black", 
+              linetype = "dashed",
+              formula = 'y ~ x') +
+  labs(x = "30 to 39",
+       y = "Assaults in 2020",
+       title = "Figure 6: Relation between number of assaults in 2020 and number of covid cases for age group 30 to 39") +
+  theme_classic() +
+  scale_color_brewer(palette = "Set1")
+```
+
+```{r figure 7, echo=FALSE}
+final_dataset |>
+  ggplot(aes(x =`40 to 49`, y = Assault_2020)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black", 
+              linetype = "dashed",
+              formula = 'y ~ x') +
+  labs(x = "40 to 49",
+       y = "Assaults in 2020",
+       title = "Figure 7: Relation between number of assaults in 2020 and number of covid cases for age group 40 to 49") +
+  theme_classic() +
+  scale_color_brewer(palette = "Set1")
+```
+
+
+```{r figure 8, echo=FALSE}
+final_dataset |>
+  ggplot(aes(x = FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`+`40 to 49`, y = Assault_2020)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black", 
+              linetype = "dashed",
+              formula = 'y ~ x') +
+  labs(x = "FEMALE_Covid_CASES+MALE_Covid_CASES+30 to 39+40 to 49",
+       y = "Assaults in 2020",
+       title = "Figure 8: Relation between number of assaults in 2020 and the final model obtained") +
+  theme_classic() +
+  scale_color_brewer(palette = "Set1")
+```
+
+Figure 4,5,6,7 and 8 all show that there seems to be a positive relation between the number of covid cases in a neighbourhood and the number of assaults in that neighbourhood. The strongest positive relation is shown to be between the number of assaults in a neighbourhood and the age group 30 to 39 since figure 6 has the steepest slope. 
+
+
+```{r figure 5, echo=FALSE}
+par(mfrow = c(2,2))
+model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`+`40 to 49`,
+     data = final_dataset)
+plot(model)
+```
+
+We can analyse the goodness of fit for the model from the above 4 plots \ref(fig:figure 5). From the residuals vs fitted plot, we see that linearity for the model does hold and that the independent variables do enter in a linear way. However, from the spread of the residuals we see that variance of our residuals is not constant which means that the model has heteroscedasticity. From the Normal Q-Q plot, we see that our data is normally distributed since the points mostly lie on the dotted line except for a few outliers. 
+
+## Conclusion of results
+
+The results obtained from our model and analysis of the dataset seem to imply that the number of covid cases in a neighbourhood had a positive relationship with the number of assaults in that same neighbourhood in the year 2020. The final model we obtained is:
+$$ y = 47.418	-0.858*x_1+1.059*x_2 +13.834*x_3 -1.964*x_4 $$
+where 
+
+y= number of assaults in a neighbourhood
+x_1 = number of female covid cases in a neighbourhood
+x_2 = number of male covid cases in a neighbourhood
+x_3 = number of covid cases between ages 30 and 39
+x_4 = number of covid cases between ages 40 and 49
 
 # Discussion
 
@@ -228,41 +368,133 @@ Weaknesses and next steps should also be included.
 
 # Appendix {-}
 
+# Appendix A
+
 ## AIC selection
-```{r, echo=FALSE}
+
+For this paper, AIC selection using modelsummary was used to obtain the final model. Several models were constructed and then using modelsummary, the model with the lowest AIC value was selected. 
+
+
+```{r, echo=TRUE}
+## the first model constructed using lm with no variables
 first_model <-
-  lm(Assault_2020 ~FEMALE_Covid_CASES,
+  lm(Assault_2020 ~1,
      data = final_dataset)
-second_model <-
-  lm(Assault_2020 ~ MALE_Covid_CASES,
-     data = final_dataset)
-third_model <-
-  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES,
-     data = final_dataset)
-fourth_model<-
-  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+Sporadic,
-     data = final_dataset)
-fifth_model <-
-  lm(Assault_2020 ~ FEMALE_Covid_CASES+MALE_Covid_CASES+Outbreak_Associated,
-     data = final_dataset)
-sixth_model <-
-  lm(Assault_2020 ~ FEMALE_Covid_CASES+MALE_Covid_CASES+Sporadic+Outbreak_Associated,data = final_dataset)
-seventh_model<-
-   lm(Assault_2020 ~ Sporadic+Outbreak_Associated,data = final_dataset)
-eight_model<-lm(Assault_2020 ~ 1,data = final_dataset)
-ninth_model<-lm(Assault_2020~Total_CASES,data=final_dataset)
-modelsummary(list(first_model,second_model,third_model,fourth_model,fifth_model,sixth_model, seventh_model,eight_model,ninth_model))
+modelsummary(first_model)
 ```
 
-```{r model, echo=FALSE, message=FALSE, include=FALSE}
-final_model<-lm(formula=Assault_2020~FEMALE_Covid_CASES+MALE_Covid_CASES,data=final_dataset)
+The AIC obtained from this model is 1757.7, so we will add a variable to see if we can reduce it. 
+
+```{r, echo=TRUE}
+second_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES,data = final_dataset)
+modelsummary(second_model)
+```
+
+The AIC obtained from this model is 1726.5 which is less so we can keep the female variable. 
+
+```{r, echo=TRUE}
+third_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES,data = final_dataset)
+modelsummary(third_model)
+```
+
+AIC obtained is 1698.6 so we can keep going. 
+
+```{r, echo=TRUE}
+fourth_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+transgender_covid_cases,data = final_dataset)
+modelsummary(fourth_model)
+```
+
+The AIC obtained is 1700.5 so we don't include transgender covid cases
+
+```{r, echo=TRUE}
+fifth_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`20 to 29`,data = final_dataset)
+modelsummary(fifth_model)
+```
+
+We keep the 20 to 29 variable since the AIC is lower.
+
+```{r, echo=TRUE}
+sixth_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`20 to 29`+`30 to 39`,data = final_dataset)
+modelsummary(sixth_model)
+```
+
+So we move on with this model.
+
+```{r, echo=TRUE}
+seventh_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`20 to 29`+`30 to 39`+`40 to 49`,data = final_dataset)
+modelsummary(seventh_model)
+```
+
+We proceed on with this model and will try to remove the 20 to 29 to see if we get a lower AIC.
+
+```{r, echo=TRUE}
+eight_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`+`40 to 49`,data = final_dataset)
+modelsummary(eight_model)
+```
+
+
+The AIC is even lower so we remove 20 to 29. We try with another variable
+
+```{r, echo=TRUE}
+seventh_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`40 to 49`,data = final_dataset)
+modelsummary(seventh_model)
+```
+
+This time the AIC is higher. 
+
+```{r, echo=TRUE}
+seventh_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`,data = final_dataset)
+modelsummary(seventh_model)
+```
+
+The AIC is again higher than the AIC value for the eight model. So the eight model is our final model for this paper. 
+
+Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`+`40 to 49`
+
+
+These are the estimates obtained for the final model using modelsummary.
+
+```{r model, echo=TRUE}
+final_model<-
+  lm(Assault_2020 ~FEMALE_Covid_CASES+MALE_Covid_CASES+`30 to 39`+`40 to 49`,
+     data = final_dataset)
 modelsummary(final_model)
 ```
 
 
+# Appendix B
 
 
-# Additional details
+## Covid Cases
+
+This is a preview of the covid_cases dataset obtained from opendatatoronto [@citeopendatatoronto]
+
+
+```{r dataset1, echo=FALSE}
+covid_cases
+```
+
+
+## Neighbourhood crime rates 
+
+This is a preview of the neighbourhood crimes dataset obtained from opendatatoronto [@citeopendatatoronto]
+
+```{r dataset2, echo=FALSE}
+neighbourhood_crime_rates
+```
+
+
+## Appendix C
+
 
 
 \newpage
@@ -270,4 +502,5 @@ modelsummary(final_model)
 
 # References
 
+<div id = "refs"></div>
 
