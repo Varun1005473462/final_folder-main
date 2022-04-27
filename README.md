@@ -6,6 +6,6 @@ More information on the datasets can be found on the Toronto Police Service Publ
 
 It is organised as follows:
 
-The CSV files containing the datasets can be found in /inputs/data. The R script showing the code used to download the datasets can be found in /scripts 
+The CSV files containing the datasets can be found in /inputs/data. The R script showing the code used to download the datasets and prepare the datasets can be found in /scripts 
 
 R markdown, references, and the final pdf can be found in /outputs/paper
