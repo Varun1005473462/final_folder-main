@@ -150,7 +150,7 @@ $$ y = \beta_0 +\beta_1*x_1+\beta_2*x_2 +\beta_3*x_3 +\beta_4*x_4 +\beta_5*x_5 $
 y= number of assaults in a neighbourhood,
 x_1 = number of female covid cases in a neighbourhood,
 x_2 = number of male covid cases in a neighbourhood,
-x_3 = number of covid cases for people between ages 20 and 29
+x_3 = number of covid cases for people between ages 20 and 29,
 x_4 = number of covid cases for people between ages 30 and 39,
 x_5 = number of covid cases for people between ages 40 and 49.
 
